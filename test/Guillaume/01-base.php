@@ -18,12 +18,12 @@ class TestAbstractMapping extends AbstractMapping
         parent::__construct($tab);
     }
 
-    public function setArticleTitle(string $value): void
+    public function setArticleTitle(string $value): void 
     {
         $this->article_title = $value;
     }
 
-    public function setArticleDateUpdate(string $value): void
+    public function setArticleDateUpdate(string $value): void 
     {
         $this->article_date_update = $value;
     }
@@ -32,9 +32,9 @@ class TestAbstractMapping extends AbstractMapping
     {
         // tant qu'on a des éléments dans le tableau
         foreach ($assoc as $clef => $valeur) {
-            // on fait exploser la clef où on trouve des _
+            // on explose la clef où on trouve des _
             $tab = explode("_",$clef);
-            // on met en majuscule le nom de chaque clef du tableau
+            // on mets en majuscule le nom de chaque clef du tableau 
             // array_map est un raccourci pour appliquer une fonction
             // à chaque élément d'un tableau (+ rapide que foreach)
             $majuscule = array_map('ucfirst',$tab);
@@ -42,11 +42,13 @@ class TestAbstractMapping extends AbstractMapping
             $nouveauNomEnCamelCase = implode($majuscule);
             // création du nom de la méthode de type setter
             $methodeName = "set" . $nouveauNomEnCamelCase;
-            
             // si la méthode existe
             if (method_exists($this, $methodeName)) {
                 // on hydrate le paramètre avec la valeur
                 $this->$methodeName($valeur);
+            }else{
+                // sinon on affiche un message d'erreur
+                echo "La méthode $methodeName n'existe pas<br>";
             }
         }
     }
@@ -61,6 +63,3 @@ $test = new TestAbstractMapping([
 ]);
 
 var_dump($test);
-
-
-
